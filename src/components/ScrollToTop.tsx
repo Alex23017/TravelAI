@@ -19,13 +19,13 @@ export default function ScrollToTop() {
     // Примусово кидаємо наверх при завантаженні
     window.scrollTo(0, 0);
 
-    // Коли юзер закриває вкладку, повертаємо налаштування назад (хороша практика)
+
     return () => {
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'auto';
       }
     };
-  }, []); // Пустий масив означає, що це спрацює лише 1 раз при старті/оновленні додатку
+  }, []);
 
   return null;
 }

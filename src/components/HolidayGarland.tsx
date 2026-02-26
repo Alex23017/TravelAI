@@ -40,7 +40,7 @@ export default function HolidayGarland() {
     };
   }, []);
 
-  // 🔥 Виправлення для мобілок: Синхронізація стану Mute з усіма треками
+
   useEffect(() => {
     audioRefs.current.forEach(audio => {
       audio.muted = isMuted; //
@@ -94,7 +94,7 @@ export default function HolidayGarland() {
                 {/* Нитка */}
                 <div className={`w-[1px] bg-yellow-600/30 ${i % 2 === 0 ? 'h-3 md:h-5' : 'h-5 md:h-8'}`}></div>
 
-                {/* Кулька з анімацією, що не застигає на мобілках */}
+
                 <motion.div
                     onClick={() => handleBallClick(i)}
                     animate={{
@@ -123,7 +123,6 @@ export default function HolidayGarland() {
           ))}
         </div>
 
-        {/* ✨ Підказка - Центрована для всіх пристроїв */}
         <AnimatePresence>
           {!isPlaying && (
               <motion.div
