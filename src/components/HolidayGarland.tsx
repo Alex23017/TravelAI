@@ -7,19 +7,16 @@ export default function HolidayGarland() {
 
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-
-  // Початкове значення за замовчуванням
   const [ballCount, setBallCount] = useState(20);
 
-  // Визначаємо кількість кульок залежно від ширини екрана (оновлені брейкпоінти)
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width < 440) setBallCount(12);        // 🔥 Дуже малі: було 8 -> стало 12
-      else if (width < 900) setBallCount(16);   // 🔥 Мобільні: було 12 -> стало 16
-      else if (width < 1300) setBallCount(28);   // 🔥 Планшети: було 20 -> стало 28
-      else if (width < 1650) setBallCount(35);  // 🔥 Ноутбуки: було 35 -> стало 45
-      else setBallCount(60);                    // 🔥 Десктопи: було 50 -> стало 60
+      if (width < 440) setBallCount(14);
+      else if (width < 900) setBallCount(18);
+      else if (width < 1300) setBallCount(28);
+      else if (width < 1650) setBallCount(35);
+      else setBallCount(60);
     };
 
     handleResize();
@@ -27,7 +24,6 @@ export default function HolidayGarland() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Завантаження звуків (без змін)
   useEffect(() => {
     const sounds = ['bell1.mp3', 'bell2.mp3', 'bell3.mp3', 'bell4.mp3', 'bell5.mp3', 'bell6.mp3'];
     audioRefs.current = sounds.map(src => {
@@ -67,30 +63,44 @@ export default function HolidayGarland() {
       <>
         <div className="relative w-full z-[9999] select-none overflow-visible bg-transparent pt-0">
 
-          {/* 🌲 Основа гілки */}
-          <div className="relative w-full h-8 min-[400px]:h-10 md:h-12 bg-green-950 overflow-hidden shadow-lg border-b border-green-400/10">
-            <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'repeating-linear-gradient(82deg, transparent, transparent 1px, #042f24 2px, #064e3b 3px)' }}></div>
-            <div className="absolute inset-0 w-full h-full" style={{ background: 'repeating-linear-gradient(90deg, rgba(0,0,0,0.5) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.5) 100%)', backgroundSize: '80px 100%' }}></div>
+          {/* 🌲 Основа гілки - ВИПРАВЛЕНО (Більш глибокий зелений з градієнтом) */}
+          <div className="relative w-full h-8 min-[400px]:h-10 md:h-12 overflow-hidden shadow-2xl border-b border-white/5">
+            {/* Базовий колір хвої */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#022c22] via-[#011c15] to-[#022c22]"></div>
+
+            {/* Текстура голок */}
+            <div
+                className="absolute inset-0 opacity-20"
+                style={{
+                  backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, #064e3b 3px, transparent 4px)',
+                  backgroundSize: '4px 100%'
+                }}
+            ></div>
+
+            {/* М'яке підсвічування */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-400/10 via-transparent to-transparent"></div>
           </div>
 
-          {/* 🔴 Кульки (ГУСТІШІ) */}
-          {/* 🔥 Змінено justify-around на justify-center та додано gap-1 */}
+          {/* 🔴 Кульки */}
           <div className="absolute top-0 left-0 w-full flex justify-center items-start gap-1 px-2 pointer-events-none mt-1 overflow-visible">
             {Array.from({ length: ballCount }).map((_, i) => (
                 <div key={i} className="flex flex-col items-center z-30 flex-shrink-0 overflow-visible">
 
-                  {/* Нитка (зменшено висоту, щоб підкреслити густоту) */}
                   <div className={`w-[1px] bg-yellow-600/40 ${i % 2 === 0 ? 'h-2 min-[400px]:h-3' : 'h-4 min-[400px]:h-6'}`}></div>
 
-                  {/* Кулька */}
                   <motion.div
                       onClick={() => handleBallClick(i)}
-                      // Трохи зменшено scale при ховері, щоб кульки не перекривали одна одну занадто сильно
-                      whileHover={{ rotate: [0, -15, 12, -8, 4, 0], scale: 1.15, transition: { duration: 0.5 } }}
+                      // Анімація для десктопа
+                      whileHover={{ rotate: [0, -18, 14, -10, 5, 0], scale: 1.15 }}
+                      // 🔥 Анімація для мобілок (спрацьовує при дотику)
+                      whileTap={{ rotate: [0, -25, 20, -15, 10, 0], scale: 1.1 }}
                       animate={{
-                        boxShadow: ["0 0 5px rgba(255,255,255,0.2)", "0 0 12px rgba(255,255,255,0.6)", "0 0 5px rgba(255,255,255,0.2)"]
+                        boxShadow: ["0 0 5px rgba(255,255,255,0.2)", "0 0 15px rgba(255,255,255,0.6)", "0 0 5px rgba(255,255,255,0.2)"]
                       }}
-                      transition={{ boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.05 } }}
+                      transition={{
+                        rotate: { duration: 0.5 },
+                        boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.05 }
+                      }}
                       className={`w-4 h-4 min-[400px]:w-6 min-[400px]:h-6 md:w-7 md:h-7 rounded-full cursor-pointer pointer-events-auto relative border-t border-white/40 shadow-xl ${
                           i % 4 === 0 ? 'bg-red-600' : i % 4 === 1 ? 'bg-blue-600' : i % 4 === 2 ? 'bg-yellow-500' : 'bg-emerald-500'
                       }`}
@@ -113,15 +123,15 @@ export default function HolidayGarland() {
                     transition={{ opacity: { duration: 2, repeat: Infinity, ease: "easeInOut" }, y: { duration: 0.8 } }}
                     className="absolute top-14 max-sm:top-12 left-0 right-0 flex justify-center pointer-events-none z-[60]"
                 >
-              <span className="text-white max-sm:text-[8px] min-[400px]:text-[10px] font-black uppercase tracking-[0.15em] min-[400px]:tracking-[0.3em] drop-shadow-md text-center bg-black/20 px-3 py-1 rounded-full backdrop-blur-[2px]">
-                Натисни на кульку
-              </span>
+                  <span className="text-white max-sm:text-[8px] min-[400px]:text-[10px] font-black uppercase tracking-[0.15em] min-[400px]:tracking-[0.3em] drop-shadow-md text-center bg-black/40 px-3 py-1 rounded-full backdrop-blur-[2px] border border-white/10">
+                    Натисни на кульку
+                  </span>
                 </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Кнопка музики (без змін) */}
+        {/* Кнопка музики */}
         <div className="fixed bottom-4 right-4 z-[110] flex items-center gap-2">
           <motion.button
               whileHover={{ scale: 1.1 }}
