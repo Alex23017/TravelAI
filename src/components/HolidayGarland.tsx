@@ -3,145 +3,152 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function HolidayGarland() {
   const audioRefs = useRef<HTMLAudioElement[]>([]);
-  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
-
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [ballCount, setBallCount] = useState(20);
 
+  // Адаптивна кількість кульок залежно від екрана
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width < 440) setBallCount(14);
-      else if (width < 900) setBallCount(18);
-      else if (width < 1300) setBallCount(28);
-      else if (width < 1650) setBallCount(35);
-      else setBallCount(60);
+      if (width < 440) setBallCount(14); //
+      else if (width < 900) setBallCount(20);
+      else if (width < 1300) setBallCount(32);
+      else if (width < 1650) setBallCount(45);
+      else setBallCount(65);
     };
-
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Ініціалізація аудіо
   useEffect(() => {
     const sounds = ['bell1.mp3', 'bell2.mp3', 'bell3.mp3', 'bell4.mp3', 'bell5.mp3', 'bell6.mp3'];
     audioRefs.current = sounds.map(src => {
       const audio = new Audio(`/sounds/${src}`);
-      audio.volume = 0.25;
+      audio.volume = 0.2;
       audio.preload = 'auto';
-      audio.loop = true;
       return audio;
     });
-    return () => { if (currentAudioRef.current) currentAudioRef.current.pause(); };
+
+    return () => {
+      audioRefs.current.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    };
   }, []);
+
+  // 🔥 Виправлення для мобілок: Синхронізація стану Mute з усіма треками
+  useEffect(() => {
+    audioRefs.current.forEach(audio => {
+      audio.muted = isMuted; //
+      if (isMuted) {
+        audio.pause(); // Примусова зупинка
+      }
+    });
+    if (isMuted) setIsPlaying(false);
+  }, [isMuted]);
 
   const handleBallClick = (index: number) => {
     if (isMuted) return;
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause();
-      currentAudioRef.current.currentTime = 0;
-    }
+
+    // Зупиняємо попередній звук перед відтворенням нового
+    audioRefs.current.forEach(audio => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+
     const nextAudio = audioRefs.current[index % audioRefs.current.length];
     if (nextAudio) {
-      currentAudioRef.current = nextAudio;
-      setIsPlaying(true);
-      nextAudio.play().catch(() => {});
+      nextAudio.play().then(() => {
+        setIsPlaying(true);
+      }).catch(err => console.log("Playback blocked:", err));
     }
   };
 
   const toggleMute = () => {
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause();
-      currentAudioRef.current.currentTime = 0;
-    }
-    setIsMuted(!isMuted);
-    setIsPlaying(false);
+    setIsMuted(prev => !prev);
   };
 
   return (
-      <>
-        <div className="relative w-full z-[9999] select-none overflow-visible bg-transparent pt-0">
+      <div className="relative w-full z-[9999] select-none overflow-visible bg-transparent pt-0">
 
-          {/* 🌲 Основа гілки - ВИПРАВЛЕНО (Більш глибокий зелений з градієнтом) */}
-          <div className="relative w-full h-8 min-[400px]:h-10 md:h-12 overflow-hidden shadow-2xl border-b border-white/5">
-            {/* Базовий колір хвої */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#022c22] via-[#011c15] to-[#022c22]"></div>
-
-            {/* Текстура голок */}
-            <div
-                className="absolute inset-0 opacity-20"
-                style={{
-                  backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, #064e3b 3px, transparent 4px)',
-                  backgroundSize: '4px 100%'
-                }}
-            ></div>
-
-            {/* М'яке підсвічування */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-400/10 via-transparent to-transparent"></div>
-          </div>
-
-          {/* 🔴 Кульки */}
-          <div className="absolute top-0 left-0 w-full flex justify-center items-start gap-1 px-2 pointer-events-none mt-1 overflow-visible">
-            {Array.from({ length: ballCount }).map((_, i) => (
-                <div key={i} className="flex flex-col items-center z-30 flex-shrink-0 overflow-visible">
-
-                  <div className={`w-[1px] bg-yellow-600/40 ${i % 2 === 0 ? 'h-2 min-[400px]:h-3' : 'h-4 min-[400px]:h-6'}`}></div>
-
-                  <motion.div
-                      onClick={() => handleBallClick(i)}
-                      // Анімація для десктопа
-                      whileHover={{ rotate: [0, -18, 14, -10, 5, 0], scale: 1.15 }}
-                      // 🔥 Анімація для мобілок (спрацьовує при дотику)
-                      whileTap={{ rotate: [0, -25, 20, -15, 10, 0], scale: 1.1 }}
-                      animate={{
-                        boxShadow: ["0 0 5px rgba(255,255,255,0.2)", "0 0 15px rgba(255,255,255,0.6)", "0 0 5px rgba(255,255,255,0.2)"]
-                      }}
-                      transition={{
-                        rotate: { duration: 0.5 },
-                        boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.05 }
-                      }}
-                      className={`w-4 h-4 min-[400px]:w-6 min-[400px]:h-6 md:w-7 md:h-7 rounded-full cursor-pointer pointer-events-auto relative border-t border-white/40 shadow-xl ${
-                          i % 4 === 0 ? 'bg-red-600' : i % 4 === 1 ? 'bg-blue-600' : i % 4 === 2 ? 'bg-yellow-500' : 'bg-emerald-500'
-                      }`}
-                      style={{ transformOrigin: 'top center' }}
-                  >
-                    <div className="absolute top-0.5 left-0.5 w-1 h-0.5 min-[400px]:w-2 min-[400px]:h-1 bg-white/70 rounded-full blur-[0.4px] rotate-[-20deg]" />
-                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 min-[400px]:w-2 h-1 min-[400px]:h-2 bg-gradient-to-r from-yellow-800 via-yellow-400 to-yellow-800 rounded-t-sm"></div>
-                  </motion.div>
-                </div>
-            ))}
-          </div>
-
-          {/* ✨ ПІДКАЗКА */}
-          <AnimatePresence>
-            {!isPlaying && (
-                <motion.div
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: [0.3, 0.7, 0.3], y: 0 }}
-                    exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.3 } }}
-                    transition={{ opacity: { duration: 2, repeat: Infinity, ease: "easeInOut" }, y: { duration: 0.8 } }}
-                    className="absolute top-14 max-sm:top-12 left-0 right-0 flex justify-center pointer-events-none z-[60]"
-                >
-                  <span className="text-white max-sm:text-[8px] min-[400px]:text-[10px] font-black uppercase tracking-[0.15em] min-[400px]:tracking-[0.3em] drop-shadow-md text-center bg-black/40 px-3 py-1 rounded-full backdrop-blur-[2px] border border-white/10">
-                    Натисни на кульку
-                  </span>
-                </motion.div>
-            )}
-          </AnimatePresence>
+        {/* 🌲 Глибокий фон гілки (fix для текстури) */}
+        <div className="relative w-full h-8 min-[400px]:h-10 md:h-12 overflow-hidden shadow-2xl border-b border-white/5">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#022c22] via-[#011c15] to-[#022c22]"></div>
+          <div
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, #064e3b 3px, transparent 4px)',
+                backgroundSize: '4px 100%'
+              }}
+          ></div>
         </div>
 
-        {/* Кнопка музики */}
-        <div className="fixed bottom-4 right-4 z-[110] flex items-center gap-2">
+        {/* 🔴 Кульки */}
+        <div className="absolute top-0 left-0 w-full flex justify-between px-2 pointer-events-none mt-1 overflow-visible">
+          {Array.from({ length: ballCount }).map((_, i) => (
+              <div key={i} className="flex flex-col items-center flex-1 overflow-visible">
+                {/* Нитка */}
+                <div className={`w-[1px] bg-yellow-600/30 ${i % 2 === 0 ? 'h-3 md:h-5' : 'h-5 md:h-8'}`}></div>
+
+                {/* Кулька з анімацією, що не застигає на мобілках */}
+                <motion.div
+                    onClick={() => handleBallClick(i)}
+                    animate={{
+                      rotate: [0, -2, 0, 2, 0],
+                      boxShadow: ["0 0 5px rgba(255,255,255,0.2)", "0 0 15px rgba(255,255,255,0.5)", "0 0 5px rgba(255,255,255,0.2)"]
+                    }}
+                    whileHover={{ rotate: [-15, 12, -8, 4, 0], scale: 1.15 }}
+                    whileTap={{
+                      rotate: [-25, 20, -15, 10, 0],
+                      scale: 0.9,
+                      transition: { type: "spring", stiffness: 400, damping: 10 }
+                    }}
+                    transition={{
+                      rotate: { duration: 4 + Math.random() * 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 },
+                      boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 }
+                    }}
+                    className={`w-4 h-4 min-[400px]:w-6 min-[400px]:h-6 md:w-7 md:h-7 rounded-full cursor-pointer pointer-events-auto relative border-t border-white/40 shadow-xl ${
+                        i % 4 === 0 ? 'bg-red-600' : i % 4 === 1 ? 'bg-blue-600' : i % 4 === 2 ? 'bg-yellow-500' : 'bg-emerald-500'
+                    }`}
+                    style={{ transformOrigin: 'top center' }}
+                >
+                  <div className="absolute top-0.5 left-0.5 w-1 h-0.5 min-[400px]:w-2 min-[400px]:h-1 bg-white/60 rounded-full blur-[0.4px] rotate-[-20deg]" />
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 min-[400px]:w-2 h-1 min-[400px]:h-2 bg-gradient-to-r from-yellow-800 via-yellow-400 to-yellow-800 rounded-t-sm"></div>
+                </motion.div>
+              </div>
+          ))}
+        </div>
+
+        {/* ✨ Підказка - Центрована для всіх пристроїв */}
+        <AnimatePresence>
+          {!isPlaying && (
+              <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute top-16 inset-x-0 flex justify-center pointer-events-none z-[60]"
+              >
+            <span className="text-white text-[9px] font-black uppercase tracking-[0.2em] drop-shadow-md text-center bg-black/50 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/10">
+              Натисни на кульку
+            </span>
+              </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Кнопка керування звуком */}
+        <div className="fixed bottom-4 right-4 z-[110]">
           <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.8 }}
               onClick={toggleMute}
-              className={`h-9 w-9 min-[400px]:h-12 min-[400px]:w-12 rounded-full shadow-2xl backdrop-blur-md border flex items-center justify-center transition-all ${
-                  isMuted ? 'bg-red-500/20 border-red-500/50 text-red-600' : 'bg-white/90 dark:bg-slate-800 border-green-500/30 text-green-700'
+              className={`h-10 w-10 min-[400px]:h-12 min-[400px]:w-12 rounded-full shadow-2xl backdrop-blur-md border flex items-center justify-center transition-all ${
+                  isMuted ? 'bg-red-500 text-white border-red-400 shadow-red-500/20' : 'bg-white/90 dark:bg-slate-800 border-green-500/30 text-green-700'
               }`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 min-[400px]:h-6 min-[400px]:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               {isMuted ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
               ) : (
@@ -150,6 +157,6 @@ export default function HolidayGarland() {
             </svg>
           </motion.button>
         </div>
-      </>
+      </div>
   );
 }
