@@ -20,6 +20,7 @@ export default function Navbar({
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
+  // Закриваємо меню при зміні сторінки
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
@@ -29,20 +30,23 @@ export default function Navbar({
   };
 
   return (
-      <nav className={`sticky top-0 z-50 transition-colors duration-500 shadow-md p-4 backdrop-blur-md ${
-          isDarkMode ? 'bg-slate-900/90 border-b border-slate-800' : 'bg-white/90 border-b border-slate-100'
+      <nav className={`sticky top-0 z-[100] transition-colors duration-500 shadow-md p-4 backdrop-blur-md ${
+          isDarkMode ? 'bg-slate-900/90 border-b border-slate-800 text-white' : 'bg-white/90 border-b border-slate-100 text-slate-900'
       }`}>
         <div className="container mx-auto flex justify-between items-center relative">
-          <Link to="/" className="text-2xl font-black text-primary z-50 flex items-center gap-2">
+
+          {/* LOGO */}
+          <Link to="/" className="text-2xl font-black text-primary z-[110] flex items-center gap-2">
             <span>✈️</span> TravelApp
           </Link>
 
+          {/* DESKTOP MENU */}
           <div className="hidden md:flex gap-6 items-center font-medium">
             <Link to="/" className="hover:text-primary transition">{t('home')}</Link>
             <Link to="/tours" className="hover:text-primary transition">{t('tours')}</Link>
             <Link to="/admin" className="hover:text-primary transition">{t('admin')}</Link>
 
-            {/* 🌓 ПЕРЕМИКАЧ ТЕМИ */}
+            {/* ПЕРЕМИКАЧ ТЕМИ */}
             <button
                 onClick={() => setIsDarkMode(!isDarkMode)}
                 className={`p-2 rounded-xl transition-all ${
@@ -61,7 +65,7 @@ export default function Navbar({
               </AnimatePresence>
             </button>
 
-            {/* ❄️ ПЕРЕМИКАЧ СНІГУ */}
+            {/* ПЕРЕМИКАЧ СНІГУ */}
             <div className="flex items-center gap-2 border-l-2 border-slate-200 dark:border-slate-700 pl-6">
               <span className="text-[10px] font-bold uppercase opacity-50">Сніг</span>
               <button
@@ -82,11 +86,61 @@ export default function Navbar({
             </div>
           </div>
 
-          <button className="md:hidden text-dark p-2" onClick={() => setIsOpen(!isOpen)}>
+          {/* BURGER BUTTON (MOBILE) */}
+          <button
+              className="md:hidden z-[110] p-2 rounded-lg bg-slate-100 dark:bg-slate-800"
+              onClick={() => setIsOpen(!isOpen)}
+          >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
             </svg>
           </button>
+
+          {/* 🔥 MOBILE MENU OVERLAY */}
+          <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className={`absolute top-full left-0 right-0 mt-2 p-6 rounded-3xl shadow-2xl border md:hidden flex flex-col gap-6 font-bold text-lg z-[100] ${
+                        isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-100 text-slate-900'
+                    }`}
+                >
+                  <Link to="/" className="hover:text-primary transition">{t('home')}</Link>
+                  <Link to="/tours" className="hover:text-primary transition">{t('tours')}</Link>
+                  <Link to="/admin" className="hover:text-primary transition">{t('admin')}</Link>
+
+                  <hr className="opacity-10" />
+
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                      <span>{isDarkMode ? '🌙' : '☀️'} Тема</span>
+                      <button
+                          onClick={() => setIsDarkMode(!isDarkMode)}
+                          className={`w-12 h-6 rounded-full relative transition-colors ${isDarkMode ? 'bg-primary' : 'bg-slate-300'}`}
+                      >
+                        <motion.div animate={{ x: isDarkMode ? 26 : 2 }} className="absolute top-1 left-0 w-4 h-4 bg-white rounded-full" />
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span>❄️ Сніг</span>
+                      <button
+                          onClick={() => setIsSnowEnabled(!isSnowEnabled)}
+                          className={`w-12 h-6 rounded-full relative transition-colors ${isSnowEnabled ? 'bg-blue-400' : 'bg-slate-300'}`}
+                      >
+                        <motion.div animate={{ x: isSnowEnabled ? 26 : 2 }} className="absolute top-1 left-0 w-4 h-4 bg-white rounded-full" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4 justify-center py-2 bg-slate-100 dark:bg-slate-800 rounded-2xl">
+                    <button onClick={() => changeLanguage('ua')} className={`flex-1 py-2 rounded-xl ${i18n.language === 'ua' ? 'bg-primary text-white' : ''}`}>UA</button>
+                    <button onClick={() => changeLanguage('en')} className={`flex-1 py-2 rounded-xl ${i18n.language === 'en' ? 'bg-primary text-white' : ''}`}>EN</button>
+                  </div>
+                </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </nav>
   );
