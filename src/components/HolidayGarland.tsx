@@ -130,9 +130,9 @@ export default function HolidayGarland() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute top-16 inset-x-0 flex justify-center pointer-events-none z-[60]"
+                  className="absolute max-xl:top-[100px] top-16 inset-x-0 flex justify-center pointer-events-none z-[60]"
               >
-            <span className="text-white text-[9px] font-black uppercase tracking-[0.2em] drop-shadow-md text-center bg-black/50 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/10">
+            <span className="text-white  text-[9px] font-black uppercase tracking-[0.2em] drop-shadow-md text-center bg-black/50 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/10">
               Натисни на кульку
             </span>
               </motion.div>
