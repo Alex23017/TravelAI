@@ -14,8 +14,8 @@ import Preloader from './components/Preloader';
 
 import HolidayGarland from './components/HolidayGarland';
 import Snowfall from './components/Snowfall';
-import Reviews from "./pages/Reviews";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Reviews from './pages/Reviews';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 
 
@@ -25,7 +25,7 @@ function App() {
 
   // 🌓 Ініціалізація теми з localStorage
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
+         const savedTheme = localStorage.getItem('theme');
     return savedTheme === 'dark';
   });
 

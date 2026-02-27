@@ -62,7 +62,7 @@ export default function Tours() {
           {tours.length === 0 && (
               <div className="col-span-full text-center py-12 text-slate-500 dark:text-slate-400 text-lg">
                 Тури не знайдені. Спробуйте додати нові через Адмін-панель.
-              </div>
+                                </div>
           )}
         </div>
       </div>
