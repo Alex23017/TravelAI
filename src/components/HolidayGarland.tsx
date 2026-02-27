@@ -100,7 +100,7 @@ export default function HolidayGarland() {
                 <div className={`w-[1px] bg-yellow-600/40 ${i % 2 === 0 ? 'h-3 md:h-4' : 'h-4 md:h-6'}`}></div>
 
                 <motion.div
-                    // Додаємо onTap для кращої підтримки мобільних
+
                     onTap={() => handleBallClick(i)}
                     onClick={() => handleBallClick(i)}
 
@@ -114,12 +114,12 @@ export default function HolidayGarland() {
                       ]
                     }}
 
-                    // На мобілках hover часто "залипає", тому робимо його м'якшим
+
                     whileHover={{ scale: 1.1 }}
 
-                    // Ефект при натисканні (працює на мобілці)
+
                     whileTap={{
-                      rotate: [-5, 5, -5, 0], // Додаємо різкий рух при кліку
+                      rotate: [-5, 5, -5, 0],
                       transition: { type: "spring", stiffness: 400, damping: 10 }
                     }}
 

@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
       <footer className="relative bg-white dark:relative dark:bg-[#0f172a] dark:[background-image:radial-gradient(circle,rgba(255,255,255,0.1)_1px,transparent_1px)] dark:[background-size:30px_30px] pt-16 pb-8 border-t border-slate-100 dark:border-slate-800 transition-colors duration-500">
-        {/* М'який градієнт зверху для об'єму */}
+
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
 
         <div className="container mx-auto px-6 lg:px-12">

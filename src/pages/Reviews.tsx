@@ -9,13 +9,13 @@ export default function Reviews() {
   const [showForm, setShowForm] = useState(false);
   const [newReview, setNewReview] = useState({ name: '', tour: '', rating: 5, text: '' });
 
-  // Фільтруємо лише схвалені відгуки для публічного показу
+
   const publicReviews = reviews.filter(r => r.status === 'Схвалено');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Створюємо новий об'єкт відгуку з типом Review
+
     const reviewData: Review = {
       id: Date.now(),
       name: newReview.name,
@@ -26,7 +26,7 @@ export default function Reviews() {
       date: new Date().toISOString()
     };
 
-    // Додаємо в глобальний стейт
+
     addReview(reviewData);
 
     alert('Дякуємо! Ваш відгук відправлено на модерацію.');

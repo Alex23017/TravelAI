@@ -6,7 +6,7 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState('bookings');
   const [newTour, setNewTour] = useState({ name: '', price: '', days: '', img: '', desc: '' });
 
-  // Стан для редагування заявок
+
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Partial<Booking>>({});
 
