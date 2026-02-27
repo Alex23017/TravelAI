@@ -129,10 +129,11 @@ export default function HolidayGarland() {
                     }}
                     whileTap={{ scale: 0.9 }}
                     transition={{
-                      rotate: { duration: 5 + Math.random() * 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 },
+
                       filter: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 },
                       layout: { duration: 0.3 },
                       rotate: {
+                        duration: 5 + Math.random() * 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.1,
                         type: "spring",
                         stiffness: 100,
                         damping: 1,
