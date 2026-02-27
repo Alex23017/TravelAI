@@ -15,7 +15,8 @@ import Preloader from './components/Preloader';
 import HolidayGarland from './components/HolidayGarland';
 import Snowfall from './components/Snowfall';
 import Reviews from "./pages/Reviews";
-import PrivacyPolicy from "./pages/PrivacyPolicy;
+import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
+
 
 
 function App() {
