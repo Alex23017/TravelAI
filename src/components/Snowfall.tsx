@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 export default function Snowfall() {
-  const snowflakes = Array.from({ length: 100 });
+  const snowflakes = Array.from({ length: 30 });
   return (
       <div className="fixed inset-0 pointer-events-none z-[45] overflow-hidden">
         {snowflakes.map((_, i) => (

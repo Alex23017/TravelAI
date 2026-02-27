@@ -31,7 +31,7 @@ export default function Navbar({
 
   return (
       <nav className={`sticky top-0 z-[100] transition-colors duration-500 shadow-md p-4 backdrop-blur-md ${
-          isDarkMode ? 'bg-slate-900/90 border-b border-slate-800 text-white' : 'bg-white/90 border-b border-slate-100 text-slate-900'
+          isDarkMode ? 'bg-slate-900/90 border-b border-slate-800 text-white' : 'bg-[#FFF9F5] border-b border-slate-100 text-slate-900'
       }`}>
         <div className="container mx-auto flex justify-between items-center relative">
 
@@ -50,7 +50,7 @@ export default function Navbar({
             <button
                 onClick={() => setIsDarkMode(!isDarkMode)}
                 className={`p-2 rounded-xl transition-all ${
-                    isDarkMode ? 'bg-slate-800 text-yellow-400' : 'bg-slate-100 text-slate-600'
+                    isDarkMode ? 'bg-slate-800 text-yellow-400' : 'bg-blue-200 text-slate-600'
                 }`}
             >
               <AnimatePresence mode="wait">

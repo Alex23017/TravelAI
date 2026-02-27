@@ -11,7 +11,7 @@ export default function Reviews({ onOpenModal }: ReviewsSectionProps) {
   const approvedReviews = reviews.filter(r => r.status === 'Схвалено');
 
   return (
-      <section className="py-24 bg-white dark:bg-slate-900 transition-colors duration-500">
+      <section className="py-24 bg-blue-200 dark:bg-slate-900 transition-colors duration-500">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold dark:text-white mb-16">Відгуки мандрівників</h2>
 
@@ -22,7 +22,7 @@ export default function Reviews({ onOpenModal }: ReviewsSectionProps) {
               breakpoints={{ 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
               autoplay={{ delay: 5000 }}
               pagination={{ clickable: true }}
-              className="pb-16"
+              className="!pb-12"
           >
             {approvedReviews.map(review => (
                 <SwiperSlide key={review.id}>

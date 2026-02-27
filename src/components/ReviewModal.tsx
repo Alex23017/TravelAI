@@ -32,7 +32,7 @@ export default function ReviewModal({ isOpen, onClose }: ReviewModalProps) {
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.9, opacity: 0 }}
-                  className="bg-white dark:bg-slate-800 rounded-3xl p-8 max-w-md w-full relative shadow-2xl border dark:border-slate-700"
+                  className="bg-blue-100 mt-20 dark:bg-slate-800 rounded-3xl p-8 max-w-md w-full relative shadow-2xl border dark:border-slate-700"
               >
                 <button
                     onClick={onClose}

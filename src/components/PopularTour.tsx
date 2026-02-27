@@ -8,9 +8,9 @@ import 'swiper/css/pagination';
 export const PopularTour = () => {
   const { tours,} = useTours();
   return (
-      <section className="py-20 bg-slate-50  dark:bg-slate-800/50 transition-colors duration-500">
+      <section className="my-20 bg-blue-200 dark:bg-slate-800/50 transition-colors duration-500">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+          <div className="flex pt-10 flex-col md:flex-row justify-between items-end mb-12 gap-4 max-sm:items-center">
             <div>
               <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">Популярні напрямки</h2>
               <div className="w-24 h-1 bg-primary rounded-full"></div>
@@ -19,7 +19,7 @@ export const PopularTour = () => {
               Всі напрямки →
             </Link>
           </div>
-          <Swiper modules={[Autoplay, Pagination]} spaceBetween={30} slidesPerView={1} breakpoints={{ 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 }, 1280: { slidesPerView: 4 } }} autoplay={{ delay: 3500 }} pagination={{ clickable: true }} className="pb-16">
+          <Swiper modules={[Autoplay, Pagination]} spaceBetween={30} slidesPerView={1} breakpoints={{ 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 }, 1280: { slidesPerView: 4 } }} autoplay={{ delay: 3500 }} pagination={{ clickable: true }} className="!pb-16 ">
             {tours.slice(0, 8).map(tour => (
                 <SwiperSlide key={tour.id}>
                   <div className="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 dark:border-slate-700 flex flex-col h-full">

@@ -11,6 +11,7 @@ export const Hero = () => {
               src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1920&q=80"
               alt="Travel Background"
               className="w-full h-full object-cover"
+              loading={"lazy"}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-slate-900"></div>
         </div>
