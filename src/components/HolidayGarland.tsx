@@ -116,7 +116,7 @@ export default function HolidayGarland() {
                 <motion.div
                     onClick={() => handleBallClick(i)}
                     animate={{
-                      rotate: [0, -2, 0, 2, 0],
+                      rotate: [-5, 0, 5, 0, -5],
                       filter: [
                         "drop-shadow(0 0 15px rgba(255,255,255,0.3)) drop-shadow(0 0 5px rgba(255,244,196,0.3))",
                         "drop-shadow(0 0 25px rgba(255,255,255,0.6)) drop-shadow(0 0 10px rgba(255,244,196,0.5))",
@@ -127,17 +127,19 @@ export default function HolidayGarland() {
                       rotate: [-10, 5, -5, 5, 0],
 
                     }}
+                    whileTap={{ scale: 0.9 }}
                     transition={{
-                      rotate: { duration: 4 + Math.random() * 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 },
+                      rotate: { duration: 5 + Math.random() * 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 },
                       filter: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 },
                       layout: { duration: 0.3 },
                       rotate: {
                         type: "spring",
                         stiffness: 100, // Менше число = повільніший рух
-                        damping: 2,     // М'якість зупинки
+                        damping: 1,     // М'якість зупинки
                         mass: 1
                       },
                     }}
+
                     // Збільшені розміри у 2 рази, додано rounded-full та м'яку напівпрозору підкладку
                     // md замено на min-[1000px] для великих екранів
                     className="cursor-pointer -mx-[50px] pointer-events-auto relative w-[48px] h-[48px]  rounded-full flex items-center justify-center p-0.5"
