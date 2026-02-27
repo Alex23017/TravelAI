@@ -44,7 +44,7 @@ export const tours = [
     name: "Каппадокія, Туреччина",
     price: 750,
     days: 4,
-    img: "https://images.unsplash.com/photo-1642232367123-1d072e9a3ea7?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
     desc: "Зустрічайте світанок на повітряній кулі над неймовірними марсіанськими пейзажами та печерними містами."
   },
   {
@@ -60,7 +60,7 @@ export const tours = [
     name: "Швейцарські Альпи",
     price: 2100,
     days: 6,
-    img: "https://images.unsplash.com/photo-1531366936337-77b12fca4718?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80",
     desc: "Гірськолижні курорти світового класу, затишні шале та неймовірні краєвиди засніжених вершин."
   }
 ];
