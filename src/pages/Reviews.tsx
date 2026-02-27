@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Footer from "../components/Footer.tsx";
 
 export default function Reviews() {
-  // Дістаємо необхідні дані та функцію додавання з контексту
   const { reviews, tours, addReview } = useTours();
 
   const [showForm, setShowForm] = useState(false);
