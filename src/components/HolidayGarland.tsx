@@ -97,7 +97,7 @@ export default function HolidayGarland() {
 
         {/* Гілка */}
         <div
-            className="relative w-full h-24 max-sm:h-20"
+            className="relative w-full h-[75px] max-sm:h-20"
             style={{
               backgroundImage: "url('/garland/background.png')",
               backgroundRepeat: "repeat-x",
@@ -110,7 +110,7 @@ export default function HolidayGarland() {
           {Array.from({ length: ballCount }).map((_, i) => (
               <div key={i} className="flex flex-col items-center flex-1 overflow-visible">
                 {/* Нитка */}
-                <div className={`w-[1px] bg-yellow-600/40 ${i % 2 === 0 ? 'h-3 md:h-5' : 'h-5 md:h-8'}`}></div>
+                <div className={`w-[1px] bg-yellow-600/40 ${i % 2 === 0 ? 'h-3 md:h-4' : 'h-4 md:h-6'}`}></div>
 
                 {/* Анімована кругла кулька-контейнер */}
                 <motion.div
@@ -134,8 +134,8 @@ export default function HolidayGarland() {
                       layout: { duration: 0.3 },
                       rotate: {
                         type: "spring",
-                        stiffness: 100, // Менше число = повільніший рух
-                        damping: 1,     // М'якість зупинки
+                        stiffness: 100,
+                        damping: 1,
                         mass: 1
                       },
                     }}

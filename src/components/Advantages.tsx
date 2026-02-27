@@ -3,7 +3,7 @@ import {fadeUp} from "../pages/Home.tsx";
 
 export const Advantages = () => {
   return (
-      <section className="pt-24 pb-20 bg-blue-200 dark:bg-slate-900 transition-colors duration-500">
+      <section className="pt-24 pb-20 bg-blue-200 dark:relative dark:bg-[#0f172a] dark:[background-image:radial-gradient(circle,rgba(255,255,255,0.1)_1px,transparent_1px)] dark:[background-size:30px_30px] transition-colors duration-500">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">Чому обирають нас?</h2>

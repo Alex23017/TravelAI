@@ -14,6 +14,9 @@ import Preloader from './components/Preloader';
 
 import HolidayGarland from './components/HolidayGarland';
 import Snowfall from './components/Snowfall';
+import Reviews from "./pages/Reviews.tsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
+
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -79,7 +82,9 @@ function App() {
                 <Route path="/tours" element={<Tours />} />
                 <Route path="/tours/:id" element={<TourDetails />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/reviews" element={<Reviews />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
               </Routes>
             </main>
           </div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Footer from "../components/Footer.tsx";
 
 export default function Contact() {
   const { t } = useTranslation();
@@ -25,7 +26,8 @@ export default function Contact() {
   };
 
   return (
-      <div className="container mx-auto py-12 px-4 transition-colors duration-500">
+      <>
+      <div className="container  mx-auto py-12 px-4 transition-colors duration-500">
         {/* Кнопка повернення додому */}
         <div className="max-w-md mx-auto mb-6">
           <Link
@@ -84,6 +86,8 @@ export default function Contact() {
             )}
           </form>
         </div>
+
       </div>
+      <Footer/></>
   );
 }

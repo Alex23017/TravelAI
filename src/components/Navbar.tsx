@@ -30,9 +30,9 @@ export default function Navbar({
   };
 
   return (
-      <nav className={`sticky top-0 z-[100] transition-colors duration-500 shadow-md p-4 backdrop-blur-md ${
-          isDarkMode ? 'bg-slate-900/90 border-b border-slate-800 text-white' : 'bg-[#FFF9F5] border-b border-slate-100 text-slate-900'
-      }`}>
+      <nav className= "relative bg-[#0f172a] [background-image:radial-gradient(circle,rgba(255,255,255,0.3)_1px,transparent_1px)] [background-size:40px_24px] border-b text-white border-slate-800 text-whitesticky top-0 z-[100] transition-colors duration-500 shadow-md p-4 backdrop-blur-md "
+
+     >
         <div className="container mx-auto flex justify-between items-center relative">
 
           {/* LOGO */}
@@ -44,6 +44,8 @@ export default function Navbar({
           <div className="hidden md:flex gap-6 items-center font-medium">
             <Link to="/" className="hover:text-primary transition">{t('home')}</Link>
             <Link to="/tours" className="hover:text-primary transition">{t('tours')}</Link>
+            <Link to="/contact" className="hover:text-primary transition">{t('contact')}</Link>
+            <Link to="/reviews" className="hover:text-primary transition">{t('reviews')}</Link>
             <Link to="/admin" className="hover:text-primary transition">{t('admin')}</Link>
 
             {/* ПЕРЕМИКАЧ ТЕМИ */}
@@ -88,7 +90,7 @@ export default function Navbar({
 
           {/* BURGER BUTTON (MOBILE) */}
           <button
-              className="md:hidden z-[110] p-2 rounded-lg bg-slate-100 dark:bg-slate-800"
+              className="md:hidden z-[110] p-2 rounded-lg bg-slate-800"
               onClick={() => setIsOpen(!isOpen)}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,6 +111,7 @@ export default function Navbar({
                 >
                   <Link to="/" className="hover:text-primary transition">{t('home')}</Link>
                   <Link to="/tours" className="hover:text-primary transition">{t('tours')}</Link>
+                  <Link to="/contact" className="hover:text-primary transition">{t('contact')}</Link>
                   <Link to="/admin" className="hover:text-primary transition">{t('admin')}</Link>
 
                   <hr className="opacity-10" />

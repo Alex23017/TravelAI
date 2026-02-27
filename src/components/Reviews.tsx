@@ -11,7 +11,7 @@ export default function Reviews({ onOpenModal }: ReviewsSectionProps) {
   const approvedReviews = reviews.filter(r => r.status === 'Схвалено');
 
   return (
-      <section className="py-24 bg-blue-200 dark:bg-slate-900 transition-colors duration-500">
+      <section className="py-20 mb-20 bg-blue-200 dark:relative dark:bg-[#0f172a] dark:[background-image:radial-gradient(circle,rgba(255,255,255,0.1)_1px,transparent_1px)] dark:[background-size:30px_30px] transition-colors duration-500">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold dark:text-white mb-16">Відгуки мандрівників</h2>
 

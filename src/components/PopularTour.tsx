@@ -8,7 +8,9 @@ import 'swiper/css/pagination';
 export const PopularTour = () => {
   const { tours,} = useTours();
   return (
-      <section className="my-20 bg-blue-200 dark:bg-slate-800/50 transition-colors duration-500">
+      <section className="my-20 bg-blue-200 dark:relative dark:bg-[#0f172a] dark:[background-image:radial-gradient(circle,rgba(255,255,255,0.1)_1px,transparent_1px)] dark:[background-size:30px_30px]">
+
+
         <div className="container mx-auto px-4">
           <div className="flex pt-10 flex-col md:flex-row justify-between items-end mb-12 gap-4 max-sm:items-center">
             <div>

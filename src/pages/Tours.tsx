@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTours } from '../context/TourContext';
+import Footer from "../components/Footer.tsx";
 
 export default function Tours() {
   const { t } = useTranslation();
   const { tours } = useTours();
 
   return (
+      <>
       <div className="container mx-auto py-12 px-4 transition-colors duration-500">
         {/* Заголовок з підтримкою темної теми */}
         <h1 className="text-4xl font-bold mb-10 text-center text-slate-900 dark:text-white">
@@ -64,5 +66,6 @@ export default function Tours() {
           )}
         </div>
       </div>
+  <Footer/> </>
   );
 }

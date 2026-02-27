@@ -5,6 +5,7 @@ import { PopularTour } from "../components/PopularTour.tsx";
 import Reviews from "../components/Reviews.tsx";
 import { ContactUs } from "../components/ContactUs.tsx";
 import ReviewModal from "../components/ReviewModal.tsx";
+import Footer from "../components/Footer.tsx";
 
 export const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -37,6 +38,7 @@ export default function Home() {
             isOpen={isReviewModalOpen}
             onClose={() => setIsReviewModalOpen(false)}
         />
+        <Footer/>
 
       </div>
   );
