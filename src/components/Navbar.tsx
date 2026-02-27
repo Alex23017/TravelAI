@@ -112,6 +112,7 @@ export default function Navbar({
                   <Link to="/" className="hover:text-primary transition">{t('home')}</Link>
                   <Link to="/tours" className="hover:text-primary transition">{t('tours')}</Link>
                   <Link to="/contact" className="hover:text-primary transition">{t('contact')}</Link>
+                  <Link to="/reviews" className="hover:text-primary transition">{t('reviews')}</Link>
                   <Link to="/admin" className="hover:text-primary transition">{t('admin')}</Link>
 
                   <hr className="opacity-10" />
